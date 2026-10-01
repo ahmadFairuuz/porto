@@ -3,36 +3,38 @@ import 'react-vertical-timeline-component/style.min.css';
 
 const experiences = [
   {
-    title: 'Senior Frontend Developer',
-    company: 'Tech Corp',
-    date: '2024 - Present',
-    icon: '💼',
+    title: 'Head of Tech Division',
+    company: 'Kopma Unila',
+    date: 'Feb 2025 - Feb 2026',
+    logo: 'https://kopmaunilaofficial.com/wp-content/uploads/2025/04/de71f7d3-2c86-4815-a2d7-34ad8ebd6fbc_removalai_preview.png',
     points: [
-      'Led migration from Vue 2 to React 18 with TypeScript',
-      'Reduced bundle size by 40% using Vite & code splitting',
-      'Implemented design system with Tailwind & Storybook'
+      'Supervised and trained 16 division staff members in web development, information management, and organizational technology workflows.',
+      'Engineered and maintained kopmaunila.com, developing 7 custom web pages, integrating Google SMTP domain emails, and publishing 30 articles.',
+      'Led major SiJuko application v7.1.0 & v7.2.0 releases and successfully achieved 71.8% adoption across 1,040+ active devices.',
+      'Managed centralized databases for monthly activity logs, official correspondence, surveys, and alumni/demisioner records.'
     ]
   },
   {
-    title: 'Fullstack Developer',
-    company: 'Startup Inc',
-    date: '2022 - 2024',
-    icon: '🚀',
+    title: 'Back End Developer (Intern)',
+    company: 'Kejaksaan Tinggi Lampung',
+    date: 'Jul 2025 - Aug 2025',
+    logo: 'https://www.kejaksaan.go.id/assets/img/webphada.png',
     points: [
-      'Built REST API with Node.js + PostgreSQL',
-      'Developed admin dashboard using React & Redux',
-      'Integrated Stripe payment & JWT authentication'
+      'Developed backend asset management website for legal case routing and confiscated goods management using Laravel and PHP.',
+      'Managed and compiled seized-asset data from 17 District Prosecutor\'s Offices and branch offices across Lampung Province.',
+      'Implemented Role-Based Access Control via custom middleware and built RESTful APIs secured with Laravel Sanctum.',
+      'Integrated features for asset tracking, including automated QR Code generation for item tags and Excel report exports.'
     ]
   },
   {
-    title: 'Junior Web Developer',
-    company: 'Digital Agency',
-    date: '2020 - 2022',
-    icon: '🎨',
+    title: 'Full Stack Engineer (Intern)',
+    company: 'PT. Stechoq Robotika Indonesia',
+    date: 'Sep 2024 - Dec 2024',
+    logo: 'https://stechoq.com/wp-content/uploads/2022/06/stechoq-logo.png',
     points: [
-      'Created responsive landing pages with HTML/CSS/JS',
-      'Collaborated with designers on Figma prototypes',
-      'Maintained WordPress sites & custom themes'
+      'Served as Lead Frontend Developer for a Supply Chain & Warehouse Management System web application.',
+      'Completed 14 fullstack modules covering frontend architecture, backend development, and deployment within 4 months.',
+      'Awarded "The Best Mentee in Time Management" out of 20+ participants for exceptional productivity and project execution.'
     ]
   }
 ];
@@ -49,8 +51,18 @@ export default function Experience() {
             <VerticalTimelineElement
               key={i}
               date={exp.date}
-              iconStyle={{ background: '#6366f1', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              icon={<span className="text-2xl">{exp.icon}</span>}
+              iconStyle={{ background: 'transparent', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              icon={
+                <img 
+                  src={exp.logo} 
+                  alt={exp.company} 
+                  className="w-12 h-12 object-contain rounded-full border-2 border-indigo/30 bg-white/10 p-1"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.innerHTML = `<span className="text-2xl font-bold">${exp.company.charAt(0)}</span>`;
+                  }}
+                />
+              }
               contentStyle={{ background: 'rgba(15, 23, 42, 0.5)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '1rem', boxShadow: 'none' }}
               contentArrowStyle={{ borderRight: '7px solid rgba(15, 23, 42, 0.5)' }}
               dateClassName="font-mono text-sm opacity-70"
