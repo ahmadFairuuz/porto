@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import HeroShowcase from './components/HeroShowcase';
 import About from './components/About';
 import Projects from './components/Projects';
 import TechStack from './components/TechStack';
@@ -29,6 +30,8 @@ function App() {
       <Navbar />
       <main id="main-content">
         <Hero />
+        {/* ── Hero baru (navy/blue) — ditambahkan di bawah hero lama, hero lama tetap ada ── */}
+        <HeroShowcase />
         <About />
         <Experience />
         <Projects />

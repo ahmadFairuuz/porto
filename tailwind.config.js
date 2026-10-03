@@ -16,6 +16,11 @@ export default {
         accent2:    '#34d399',
         hairline:   'rgba(255,255,255,0.06)',
         'hairline-h':'rgba(255,255,255,0.15)',
+        // ── Hero Showcase (navy/blue) design tokens — dipakai lewat CSS vars ──
+        ink:   { 900: 'var(--bg-1)', 950: 'var(--bg-2)' },
+        brand: { DEFAULT: 'var(--accent)', bright: 'var(--accent-bright)', deep: 'var(--accent-deep)' },
+        glow:  'var(--glow)',
+        muted: 'var(--muted)',
       },
       fontFamily: {
         heading: ['"Clash Display"', 'sans-serif'],
