@@ -1,47 +1,51 @@
 import { motion } from 'framer-motion';
 
 export default function Hero() {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 48, filter: 'blur(8px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.9, ease: [0.32, 0.72, 0, 1] } }
+  };
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center">
-      <div className="relative z-10 text-center px-6 max-w-3xl">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="font-mono text-sm text-indigo tracking-widest uppercase mb-4"
-        >
-          Fullstack Developer & UI/UX Designer
-        </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="font-heading font-extrabold text-4xl sm:text-5xl md:text-7xl text-heading leading-tight mb-6"
-        >
-          Building digital <span className="glow-text">experiences</span> that matter.
+    <section id="home" className="relative min-h-[100dvh] flex items-center justify-center text-center">
+      <motion.div 
+        variants={container} 
+        initial="hidden" 
+        animate="show" 
+        className="relative z-10 px-4 w-full max-w-3xl"
+      >
+        <motion.div variants={item} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] font-medium text-accent bg-accent/10 border border-accent/15 mb-5">
+          fairuz.dev
+        </motion.div>
+        
+        <motion.h1 variants={item} className="font-heading font-bold text-5xl md:text-[5rem] text-heading leading-[1.1] tracking-tight mb-6">
+          Code. <span className="bg-gradient-to-br from-accent via-[#a78bfa] to-[#06b6d4] text-transparent bg-clip-text">Ship.</span> Repeat.
         </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed"
-        >
-          Crafting performant web & mobile applications with clean architecture and intuitive interfaces.
+        
+        <motion.p variants={item} className="text-lg md:text-[1.15rem] max-w-xl mx-auto mb-12 leading-relaxed">
+          Fullstack & mobile developer — Laravel, Flutter, React. Building production systems from university, not just assignments.
         </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a href="#projects" className="px-8 py-3.5 rounded-xl font-heading font-semibold text-sm text-white bg-indigo hover:bg-indigo/90 transition-all">
+        
+        <motion.div variants={item} className="flex flex-wrap items-center justify-center gap-4">
+          <a href="#projects" className="group inline-flex items-center gap-3 pl-7 pr-5 py-3 rounded-full font-heading font-semibold text-sm bg-accent text-white hover:scale-[0.98] transition-all duration-500 ease-spring">
             View Projects
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-black/15 group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105 transition-all duration-500 ease-spring">↗</span>
           </a>
-          <a href="#contact" className="px-8 py-3.5 rounded-xl font-heading font-semibold text-sm text-heading border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all">
+          
+          <a href="#contact" className="group inline-flex items-center gap-3 pl-7 pr-5 py-3 rounded-full font-heading font-semibold text-sm border border-hairline text-heading bg-transparent hover:bg-white/5 hover:border-hairline-h hover:scale-[0.98] transition-all duration-500 ease-spring">
             Get In Touch
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/5 group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105 transition-all duration-500 ease-spring">→</span>
           </a>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
