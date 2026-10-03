@@ -1,68 +1,72 @@
-const icon = (slug: string, color: string) => `https://cdn.simpleicons.org/${slug}/${color}`;
-
-type Tech = { name: string; logo: string };
+import { motion } from 'framer-motion';
 
 export default function TechStack() {
-  const row1: Tech[] = [
-    { name: "React.js", logo: icon("react", "61DAFB") },
-    { name: "Node.js", logo: icon("nodedotjs", "339933") },
-    { name: "Vue.js", logo: icon("vuedotjs", "4FC08D") },
-    { name: "Laravel", logo: icon("laravel", "FF2D20") },
-    { name: "Flutter", logo: icon("flutter", "02569B") },
-    { name: "CodeIgniter", logo: icon("codeigniter", "EE4323") },
-    { name: "Tailwind", logo: icon("tailwindcss", "06B6D4") },
+  const row1 = [
+    { name: 'React.js', img: 'react/61DAFB' },
+    { name: 'Node.js', img: 'nodedotjs/339933' },
+    { name: 'Vue.js', img: 'vuedotjs/4FC08D' },
+    { name: 'Laravel', img: 'laravel/FF2D20' },
+    { name: 'Flutter', img: 'flutter/02569B' },
+    { name: 'CodeIgniter', img: 'codeigniter/EE4323' },
+    { name: 'Tailwind', img: 'tailwindcss/06B6D4' }
   ];
 
-  const row2: Tech[] = [
-    { name: "Bootstrap", logo: icon("bootstrap", "7952B3") },
-    { name: "PHP", logo: icon("php", "777BB4") },
-    { name: "JavaScript", logo: icon("javascript", "F7DF1E") },
-    { name: "Git", logo: icon("git", "F05032") },
-    { name: "Docker", logo: icon("docker", "2496ED") },
-    { name: "Postman", logo: icon("postman", "FF6C37") },
-    { name: "Firebase", logo: icon("firebase", "FFCA28") },
-    { name: "Figma", logo: icon("figma", "F24E1E") },
-    { name: "WordPress", logo: icon("wordpress", "21759B") },
+  const row2 = [
+    { name: 'Bootstrap', img: 'bootstrap/7952B3' },
+    { name: 'PHP', img: 'php/777BB4' },
+    { name: 'JavaScript', img: 'javascript/F7DF1E' },
+    { name: 'Git', img: 'git/F05032' },
+    { name: 'Docker', img: 'docker/2496ED' },
+    { name: 'Postman', img: 'postman/FF6C37' },
+    { name: 'Firebase', img: 'firebase/FFCA28' },
+    { name: 'Figma', img: 'figma/F24E1E' },
+    { name: 'WordPress', img: 'wordpress/21759B' }
   ];
 
-  const Card = ({ name, logo }: Tech) => (
-    <div className="glass rounded-xl px-6 py-4 flex items-center gap-3 min-w-[160px] shrink-0">
-      <img src={logo} alt={name} className="w-6 h-6 object-contain" loading="lazy" />
-      <span className="font-heading font-semibold text-sm text-heading">{name}</span>
-    </div>
-  );
+  const scrollVariant = {
+    hidden: { opacity: 0, y: 48, filter: 'blur(8px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.9, ease: [0.32, 0.72, 0, 1] } }
+  };
 
   return (
-    <section id="techstack" className="relative py-24 md:py-32 overflow-hidden">
+    <section id="techstack" className="py-28 md:py-40 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="font-mono text-sm text-indigo tracking-widest uppercase mb-3">Tech Stack</p>
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-heading mb-4">
-            Technologies I Work With
-          </h2>
-          <p className="text-body max-w-md mx-auto">
-            Tools and technologies powering my projects — from frontend frameworks to cloud infrastructure.
-          </p>
-        </div>
+        
+        <motion.div variants={scrollVariant} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.08 }} className="text-center mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] font-medium text-accent bg-accent/10 border border-accent/15 mb-5">
+            Tech Stack
+          </div>
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-heading mb-4">Technologies I Work With</h2>
+          <p className="max-w-xl mx-auto">Tools and technologies powering my projects — from frontend frameworks to cloud infrastructure.</p>
+        </motion.div>
       </div>
 
-      <div className="relative mb-6">
-        <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-obsidian to-transparent z-10" />
-        <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-obsidian to-transparent z-10" />
-        <div className="marquee-track px-8">
-          {row1.map((t, i) => <Card key={`a${i}`} {...t} />)}
-          {row1.map((t, i) => <Card key={`b${i}`} {...t} />)}
+      <motion.div variants={scrollVariant} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.08 }} className="relative mb-6">
+        <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none"></div>
+        <div className="flex w-max animate-marquee gap-5 px-2">
+          {[...row1, ...row1].map((tech, i) => (
+            <div key={i} className="flex items-center gap-3 px-5 py-3 bg-bg-inner border border-hairline rounded-[0.85rem] shrink-0">
+              <img src={'https://cdn.simpleicons.org/' + tech.img} alt={tech.name} className="w-5 h-5 object-contain" />
+              <span className="font-heading font-semibold text-xs text-heading">{tech.name}</span>
+            </div>
+          ))}
         </div>
-      </div>
+      </motion.div>
 
-      <div className="relative">
-        <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-obsidian to-transparent z-10" />
-        <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-obsidian to-transparent z-10" />
-        <div className="marquee-track-reverse px-8">
-          {row2.map((t, i) => <Card key={`c${i}`} {...t} />)}
-          {row2.map((t, i) => <Card key={`d${i}`} {...t} />)}
+      <motion.div variants={scrollVariant} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.08 }} className="relative">
+        <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none"></div>
+        <div className="flex w-max animate-marquee-rev gap-5 px-2">
+          {[...row2, ...row2].map((tech, i) => (
+            <div key={i} className="flex items-center gap-3 px-5 py-3 bg-bg-inner border border-hairline rounded-[0.85rem] shrink-0">
+              <img src={'https://cdn.simpleicons.org/' + tech.img} alt={tech.name} className="w-5 h-5 object-contain" />
+              <span className="font-heading font-semibold text-xs text-heading">{tech.name}</span>
+            </div>
+          ))}
         </div>
-      </div>
+      </motion.div>
+
     </section>
   );
 }
