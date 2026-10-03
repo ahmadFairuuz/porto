@@ -6,35 +6,37 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-3 py-2 rounded-full bg-[rgba(10,10,10,0.7)] backdrop-blur-xl border border-hairline shadow-2xl"
-      >
-        <a href="#home" className="font-heading font-bold text-base text-heading px-3 mr-2">
-          <span className="text-accent">F</span>airuz.
-        </a>
-        <div className="hidden md:flex items-center gap-1">
-          {['About', 'Experience', 'Projects', 'Tech Stack', 'Certifications', 'Contact'].map((item) => (
-            <a 
-              key={item}
-              href={'#' + item.toLowerCase().replace(' ', '')} 
-              className="text-sm font-medium text-white/50 hover:text-heading hover:bg-white/5 px-3.5 py-2 rounded-full transition-all duration-400 ease-spring"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-        <button 
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 text-heading"
-          aria-label="Toggle Menu"
+      <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+        <motion.nav 
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+          className="pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full bg-[rgba(10,10,10,0.7)] backdrop-blur-xl border border-hairline shadow-2xl"
         >
-          <div className="w-5 h-0.5 bg-heading mb-1 rounded-full transition-transform" style={{ transform: isOpen ? 'rotate(45deg) translate(3px, 3px)' : '' }}></div>
-          <div className="w-5 h-0.5 bg-heading rounded-full transition-transform" style={{ transform: isOpen ? 'rotate(-45deg) translate(2px, -3px)' : '' }}></div>
-        </button>
-      </motion.nav>
+          <a href="#home" className="font-heading font-bold text-base text-heading px-3 mr-2">
+            <span className="text-accent">F</span>airuz.
+          </a>
+          <div className="hidden md:flex items-center gap-1">
+            {['About', 'Experience', 'Projects', 'Tech Stack', 'Certifications', 'Contact'].map((item) => (
+              <a 
+                key={item}
+                href={'#' + item.toLowerCase().replace(' ', '')} 
+                className="text-sm font-medium text-white/50 hover:text-heading hover:bg-white/5 px-3.5 py-2 rounded-full transition-all duration-400 ease-spring"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-heading"
+            aria-label="Toggle Menu"
+          >
+            <div className="w-5 h-0.5 bg-heading mb-1 rounded-full transition-transform" style={{ transform: isOpen ? 'rotate(45deg) translate(3px, 3px)' : '' }}></div>
+            <div className="w-5 h-0.5 bg-heading rounded-full transition-transform" style={{ transform: isOpen ? 'rotate(-45deg) translate(2px, -3px)' : '' }}></div>
+          </button>
+        </motion.nav>
+      </div>
 
       <AnimatePresence>
         {isOpen && (
