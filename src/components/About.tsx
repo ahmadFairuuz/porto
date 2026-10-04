@@ -52,7 +52,7 @@ export default function About() {
             </h2>
             <div className="space-y-4 leading-[1.8] text-white/70 text-sm md:text-base">
               <p>
-                Informatics Engineering graduate from University of Lampung (GPA 3.85/4.00) specializing in Fullstack Web Development and UI/UX Design. Experienced in building end-to-end digital solutions—from Laravel RESTful APIs and secure database architectures to responsive React & Tailwind interfaces.
+                Informatics Engineering graduate from University of Lampung specializing in Fullstack Web Development and UI/UX Design. Experienced in building end-to-end digital solutions—from Laravel RESTful APIs and secure database architectures to responsive React & Tailwind interfaces.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-hairline">
