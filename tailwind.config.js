@@ -7,16 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg:         '#050505',
-        'bg-card':  'rgba(255,255,255,0.03)',
-        'bg-inner': 'rgba(255,255,255,0.05)',
-        heading:    '#f0f0f0',
-        body:       'rgba(255,255,255,0.6)',
-        accent:     '#818cf8',
-        accent2:    '#34d399',
-        hairline:   'rgba(255,255,255,0.06)',
-        'hairline-h':'rgba(255,255,255,0.15)',
-        // ── Hero Showcase (navy/blue) design tokens — dipakai lewat CSS vars ──
+        bg:         '#0B1220',
+        'bg-card':  'rgba(255,255,255,0.04)',
+        'bg-inner': 'rgba(255,255,255,0.06)',
+        heading:    '#F8FAFC',
+        body:       'rgba(255,255,255,0.7)',
+        accent:     '#3B82F6',
+        accent2:    '#60A5FA',
+        hairline:   'rgba(255,255,255,0.08)',
+        'hairline-h':'rgba(255,255,255,0.18)',
+        // ── Hero Showcase (navy/blue) design tokens ──
         ink:   { 900: 'var(--bg-1)', 950: 'var(--bg-2)' },
         brand: { DEFAULT: 'var(--accent)', bright: 'var(--accent-bright)', deep: 'var(--accent-deep)' },
         glow:  'var(--glow)',

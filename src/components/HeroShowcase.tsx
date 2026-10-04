@@ -27,7 +27,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { ArrowRight, Mail, Quote } from 'lucide-react';
+import { ArrowRight, ExternalLink, Quote } from 'lucide-react';
 import characterImg from '../assets/fotoPortofolioBG.png';
 
 /* ─── KONFIGURASI ─────────────────────────────────────────────── */
@@ -41,15 +41,7 @@ const BOXED_MAX_WIDTH = 'max-w-[1440px]';
 // Easing entrance (cubic-bezier(.16,1,.3,1))
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/**
- * Avatar placeholder (data-URI SVG, tema biru, inisial "AJ").
- * GANTI: ganti AVATAR_SRC dengan foto avatar kamu, contoh: const AVATAR_SRC = '/avatar.jpg';
- */
-const AVATAR_SRC =
-  'data:image/svg+xml;utf8,' +
-  encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient></defs><rect width="80" height="80" fill="url(#g)"/><text x="40" y="53" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="30" font-weight="700" fill="#F8FAFC" text-anchor="middle">AJ</text></svg>`
-  );
+
 
 /* ─── VARIANTS (entrance stagger) ─────────────────────────────── */
 
@@ -273,34 +265,15 @@ function GlowCurves({ className = '' }: { className?: string }) {
 
 /* ─── KOMPONEN: HeroQuoteCard (glass testimonial) ─────────────── */
 
-function HeroQuoteCard({ name }: { name: string }) {
+function HeroMottoCard() {
   return (
-    <figure className="hero-quote">
-      <Quote className="hero-quote__icon" size={34} aria-hidden="true" />
-
+    <figure className="hero-quote hero-quote--motto">
+      <Quote className="hero-quote__icon" size={28} aria-hidden="true" />
       <blockquote className="hero-quote__text">
-        Working with {name} was so good, he&apos;s so professional and would work with him again
+        Think deeply. Build cleanly. Ship boldly.
       </blockquote>
-
-      <figcaption className="hero-quote__person">
-        <span className="hero-quote__avatar">
-          {/* Ring gradient biru yang berputar pelan */}
-          <span className="hero-quote__ring" aria-hidden="true" />
-          {/* GANTI: ganti src dengan foto avatar kamu */}
-          <img
-            className="hero-quote__img"
-            src={AVATAR_SRC}
-            alt={`Avatar of ${name}`}
-            width={48}
-            height={48}
-            loading="lazy"
-            decoding="async"
-          />
-        </span>
-        <span className="hero-quote__meta">
-          <span className="hero-quote__name">Angelina Jolie</span>
-          <span className="hero-quote__role">Business owner</span>
-        </span>
+      <figcaption className="hero-quote__author">
+        — Ahmad Fairuz Rizky Gani
       </figcaption>
     </figure>
   );
@@ -325,10 +298,8 @@ function HeroLeft() {
             sedangkan .sr-only berisi kalimat lengkap & stabil untuk screen reader.
             Tidak ada duplikat visual karena .sr-only tidak ditampilkan. */}
         <motion.p variants={leftItem} className="hero-intro">
-          <span className="sr-only">Hey I am {NAME}</span>
           <span aria-hidden="true" className="hero-intro__visible">
             Hey I am <span className="hero-intro__name">{typed}</span>
-            <span className="hero-cursor" />
           </span>
         </motion.p>
 
@@ -337,12 +308,12 @@ function HeroLeft() {
             jadi headline ini dibuat <h2> dengan gaya visual identik (paling besar)
             agar aturan "hanya satu <h1>" tetap terpenuhi. */}
         <motion.h2 id="showcase-title" variants={headline} className="hero-headline">
-          Web Developer
+          Software Developer
         </motion.h2>
 
         {/* ── Sub-headline ── */}
         <motion.p variants={leftItem} className="hero-sub">
-          I design websites using Figma and develop them to bring to live
+          Building high performance web applications, secure RESTful APIs, and intuitive user interfaces with React, Laravel, and Tailwind CSS
         </motion.p>
 
         {/* ── CTA row: primary pill + secondary circle (email) ── */}
@@ -356,18 +327,19 @@ function HeroLeft() {
             <ArrowRight className="hero-btn__arrow" size={18} aria-hidden="true" />
           </a>
           <a
-            href="mailto:hello@example.com"
-            className="hero-btn hero-btn--mail"
-            aria-label="Send me an email"
+            href="#projects"
+            className="hero-btn hero-btn--secondary w-full sm:w-auto"
+            aria-label="View my projects"
           >
-            <Mail size={20} aria-hidden="true" />
+            View Project
+            <ExternalLink className="hero-btn__arrow" size={18} aria-hidden="true" />
           </a>
         </motion.div>
       </div>
 
       {/* ── Glass quote card — pojok kiri bawah di desktop (lg:mt-auto) ── */}
       <motion.div variants={leftItem} className="w-full lg:mt-auto">
-        <HeroQuoteCard name={NAME} />
+        <HeroMottoCard />
       </motion.div>
     </motion.div>
   );

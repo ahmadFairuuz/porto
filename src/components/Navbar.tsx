@@ -42,7 +42,7 @@ export default function Navbar() {
           aria-label="Primary"
           className="pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full bg-[rgba(10,10,10,0.7)] backdrop-blur-xl border border-hairline shadow-2xl"
         >
-          <a href="#home" className="font-heading font-bold text-base text-heading px-3 mr-2">
+          <a href="#hero" className="font-heading font-bold text-base text-heading px-3 mr-2">
             <span className="text-accent">F</span>airuz.
           </a>
           <div className="hidden md:flex items-center gap-1">

@@ -39,34 +39,34 @@ export default function TechStack() {
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-heading mb-4">Technologies I Work With</h2>
           <p className="max-w-xl mx-auto">Tools and technologies powering my projects — from frontend frameworks to cloud infrastructure.</p>
         </motion.div>
+
+        <div className="relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none"></div>
+          <div className="flex w-max animate-marquee gap-5 px-2">
+            {[...row1, ...row1].map((tech, i) => (
+              <div key={i} className="flex items-center gap-3 px-5 py-3 bg-bg-inner border border-hairline rounded-[0.85rem] shrink-0">
+                <img src={'https://cdn.simpleicons.org/' + tech.img} alt={tech.name} className="w-5 h-5 object-contain" />
+                <span className="font-heading font-semibold text-xs text-heading">{tech.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative overflow-hidden mt-6">
+          <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none"></div>
+          <div className="flex w-max animate-marquee-rev gap-5 px-2">
+            {[...row2, ...row2].map((tech, i) => (
+              <div key={i} className="flex items-center gap-3 px-5 py-3 bg-bg-inner border border-hairline rounded-[0.85rem] shrink-0">
+                <img src={'https://cdn.simpleicons.org/' + tech.img} alt={tech.name} className="w-5 h-5 object-contain" />
+                <span className="font-heading font-semibold text-xs text-heading">{tech.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
-
-      <motion.div variants={scrollVariant} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.08 }} className="relative mb-6">
-        <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none"></div>
-        <div className="flex w-max animate-marquee gap-5 px-2">
-          {[...row1, ...row1].map((tech, i) => (
-            <div key={i} className="flex items-center gap-3 px-5 py-3 bg-bg-inner border border-hairline rounded-[0.85rem] shrink-0">
-              <img src={'https://cdn.simpleicons.org/' + tech.img} alt={tech.name} className="w-5 h-5 object-contain" />
-              <span className="font-heading font-semibold text-xs text-heading">{tech.name}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      <motion.div variants={scrollVariant} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.08 }} className="relative">
-        <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none"></div>
-        <div className="flex w-max animate-marquee-rev gap-5 px-2">
-          {[...row2, ...row2].map((tech, i) => (
-            <div key={i} className="flex items-center gap-3 px-5 py-3 bg-bg-inner border border-hairline rounded-[0.85rem] shrink-0">
-              <img src={'https://cdn.simpleicons.org/' + tech.img} alt={tech.name} className="w-5 h-5 object-contain" />
-              <span className="font-heading font-semibold text-xs text-heading">{tech.name}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
     </section>
   );
 }
