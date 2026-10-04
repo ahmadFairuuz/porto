@@ -1,18 +1,485 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Fonts: Clash Display (display) + Plus Jakarta Sans (body) + JetBrains Mono */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ─── BASE ─────────────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: #090A0F; color: #94A3B8; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-::selection { background: #6366F1; color: #fff; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  margin: 0;
+  background: #060B14;
+  background-image: linear-gradient(145deg, #0E1A33 0%, #0B1220 45%, #060B14 100%);
+  background-attachment: fixed;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: 'Clash Display', sans-serif; color: #F8FAFC; }
+
+::selection { background: #3B82F6; color: #fff; }
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #090A0F; }
-::-webkit-scrollbar-thumb { background: #6366F1; border-radius: 3px; }
-.glow-text { background: linear-gradient(135deg, #6366F1, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+::-webkit-scrollbar-track { background: #060B14; }
+::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 3px; }
 
-.glass { background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+/* ─── NOISE OVERLAY (fixed, GPU-safe) ──────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
 
+/* ─── AMBIENT GRADIENT ORBS (navy/blue theme) ──── */
+.ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.ambient .orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.18; }
+.ambient .orb-1 { width: 70vw; max-width: 800px; height: 70vw; max-height: 800px; background: #1D4ED8; top: -15%; right: -10%; }
+.ambient .orb-2 { width: 60vw; max-width: 700px; height: 60vw; max-height: 700px; background: #2563EB; bottom: 15%; left: -15%; }
+.ambient .orb-3 { width: 50vw; max-width: 600px; height: 50vw; max-height: 600px; background: #3B82F6; bottom: -10%; right: 25%; }
+
+/* ─── MARQUEE ──────────────────────────────────── */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.marquee-track { display: flex; gap: 1rem; animation: marquee 40s linear infinite; }
-.marquee-track-reverse { display: flex; gap: 1rem; animation: marquee 35s linear infinite reverse; }
+.marquee-track { display: flex; gap: 1rem; width: max-content; animation: marquee 35s linear infinite; }
+.marquee-track-rev { animation-direction: reverse; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track { animation: none; }
+}
+
+/* ==========================================================================
+   HERO SHOWCASE — navy/blue theme  (section baru di bawah <Hero/> lama)
+   Semua warna lewat CSS variables (scoped ke .hero-navy) agar mudah diubah.
+   Struktur class BEM-ish: block__element--modifier.
+   ========================================================================== */
+
+/* ─── DESIGN TOKENS (ganti di sini untuk ubah tema) ───────────── */
+.hero-navy {
+  --bg-1: #0B1220;                         /* navy gelap */
+  --bg-2: #060B14;                         /* hampir hitam kebiruan */
+  --bg-gradient: linear-gradient(145deg, #0E1A33 0%, #0B1220 45%, #060B14 100%);
+  --accent: #3B82F6;                        /* biru utama / tombol */
+  --accent-bright: #60A5FA;                 /* highlight teks & ikon kutip */
+  --accent-deep: #1D4ED8;                   /* hover / gradient tombol */
+  --glow: #2563EB;                          /* glow blobs & curve stroke */
+  --text: #F8FAFC;                          /* putih untuk headline */
+  --muted: #94A3B8;                         /* teks sekunder */
+
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.12);
+
+  --radius-frame: 40px;                     /* container */
+  --radius-card: 20px;                      /* card */
+  --radius-pill: 999px;                     /* button */
+
+  --shadow-btn: 0 10px 30px -8px rgba(59, 130, 246, 0.55);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color: var(--text);
+}
+
+/* ─── FRAME (container rounded besar) ─────────────────────────── */
+.hero-frame {
+  background: var(--bg-gradient);
+  isolation: isolate;                       /* jaga stacking glow di dalam frame */
+}
+
+/* ─── BACKGROUND DECORATIVE ───────────────────────────────────── */
+.hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+
+/* Glow blobs biru (blur 80px) — drift sangat pelan */
+.hero-blob {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+  animation: hero-blob-drift 22s ease-in-out infinite alternate;
+}
+.hero-blob--1 {
+  width: 46vw; height: 46vw; max-width: 620px; max-height: 620px;
+  top: -12%; right: -6%;
+  background: radial-gradient(circle at 50% 50%, var(--glow), transparent 70%);
+  opacity: 0.45;
+}
+.hero-blob--2 {
+  width: 40vw; height: 40vw; max-width: 540px; max-height: 540px;
+  bottom: -16%; left: -8%;
+  background: radial-gradient(circle at 50% 50%, var(--accent), transparent 70%);
+  opacity: 0.35;
+  animation-duration: 18s;
+  animation-delay: -6s;
+}
+.hero-blob--3 {
+  width: 30vw; height: 30vw; max-width: 420px; max-height: 420px;
+  bottom: 12%; right: 22%;
+  background: radial-gradient(circle at 50% 50%, var(--accent-bright), transparent 70%);
+  opacity: 0.35;
+  animation-duration: 25s;
+  animation-delay: -12s;
+}
+
+/* Overlay grid halus */
+.hero-grid {
+  position: absolute; inset: 0;
+  opacity: 0.03;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, transparent 78%);
+}
+
+/* Overlay noise halus untuk tekstur */
+.hero-noise {
+  position: absolute; inset: 0;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ─── KOLOM KIRI: intro line ──────────────────────────────────── */
+.hero-intro {
+  font-size: clamp(13px, min(1.2vw, 1.9svh), 18px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+}
+.hero-intro__name { color: var(--accent-bright); font-weight: 600; }
+.hero-intro__visible { display: inline; }
+.hero-cursor {
+  display: inline-block;
+  width: 2px; height: 2 em;
+  margin-left: 3px;
+  vertical-align: -0.18em;
+  background: var(--accent-bright);
+  animation: hero-cursor-blink 1s step-end infinite;
+}
+
+/* ─── KOLOM KIRI: headline ────────────────────────────────────── */
+.hero-headline {
+  font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+  font-size: clamp(2.5rem, min(8.5vw, 11svh), 7.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-wrap: balance;
+  margin: 0;
+  will-change: transform, filter;
+}
+
+/* ─── KOLOM KIRI: sub-headline ────────────────────────────────── */
+.hero-sub {
+  max-width: 520px;
+  font-size: clamp(13.5px, min(1.3vw, 2.1svh), 19px);
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* ─── KOLOM KIRI: kolom & jarak vertikal (ikut tinggi viewport) ─ */
+.hero-left {
+  gap: clamp(14px, 2.6svh, 40px);
+  min-height: 0;
+}
+.hero-left__stack {
+  gap: clamp(10px, 2svh, 24px);
+}
+
+/* ─── KOLOM KIRI: CTA row ─────────────────────────────────────── */
+.hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 28px;
+  font-size: 15px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out),
+    background 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+}
+.hero-btn:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+
+.hero-btn--primary {
+  color: #fff;
+  background: linear-gradient(180deg, var(--accent), var(--accent-deep));
+  box-shadow: var(--shadow-btn);
+}
+.hero-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -8px rgba(59, 130, 246, 0.8);
+}
+.hero-btn__arrow { transition: transform 0.4s var(--ease-out); }
+.hero-btn--primary:hover .hero-btn__arrow { transform: translateX(4px); }
+
+.hero-btn--secondary {
+  color: var(--text);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.hero-btn--secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 24px -4px rgba(96, 165, 250, 0.5);
+}
+.hero-btn--secondary .hero-btn__arrow { transition: transform 0.4s var(--ease-out); }
+.hero-btn--secondary:hover .hero-btn__arrow { transform: translate(3px, -3px); }
+
+/* ─── KOLOM KIRI: glass quote card ────────────────────────────── */
+.hero-quote {
+  max-width: 440px;
+  margin: 0;
+  padding: clamp(14px, 2.1svh, 22px) clamp(16px, 1.6vw, 24px);
+  border-radius: var(--radius-card);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition: transform 0.5s var(--ease-out), border-color 0.5s var(--ease-out),
+    box-shadow 0.5s var(--ease-out);
+}
+.hero-quote:hover {
+  transform: translateY(-4px);
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow: 0 18px 44px -18px rgba(37, 99, 235, 0.7);
+}
+.hero-quote--motto {
+  max-width: 380px;
+  padding: 16px 22px;
+}
+.hero-quote--motto .hero-quote__icon {
+  color: var(--accent-bright);
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+.hero-quote--motto .hero-quote__text {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+  color: var(--text);
+  font-style: italic;
+}
+.hero-quote--motto .hero-quote__author {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  font-style: normal;
+}
+
+.hero-quote__person { display: flex; align-items: center; gap: 12px; }
+
+.hero-quote__avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px; height: 48px;
+  flex: none;
+}
+.hero-quote__ring {
+  position: absolute; inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--accent-bright), var(--accent-deep), var(--accent-bright));
+  animation: hero-ring-spin 8s linear infinite;
+  will-change: transform;
+}
+.hero-quote__img {
+  position: relative;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg-1);
+}
+
+.hero-quote__meta { display: flex; flex-direction: column; line-height: 1.35; }
+.hero-quote__name { font-weight: 700; color: var(--text); font-size: 14.5px; }
+.hero-quote__role { color: var(--muted); font-size: 13px; }
+
+/* ─── KOLOM KANAN: visual ─────────────────────────────────────── */
+.hero-visual { isolation: isolate; }
+
+.hero-visual__curves {
+  position: absolute;
+  inset: -8% -6%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Arrow 3D translucent besar (kanan atas) */
+.hero-arrow-wrap {
+  position: absolute;
+  top: 3%; right: 1%;
+  width: clamp(96px, 13vw, 168px);
+  aspect-ratio: 1;
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-arrow {
+  width: 100%; height: 100%;
+  opacity: 0.22;
+  filter: drop-shadow(0 14px 30px rgba(37, 99, 235, 0.55));
+  animation: hero-arrow-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Karakter / ilustrasi (foto portrait, center) — lebar ikut TINGGI viewport
+   supaya tidak memaksa frame memanjang ke bawah saat layar diperkecil */
+.hero-character {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(190px, min(30vw, 46svh), 410px);
+  animation: hero-char-bob 3.5s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-character__blob {
+  position: absolute;
+  width: 130%; aspect-ratio: 1;
+  top: 4%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 38%, rgba(59, 130, 246, 0.5), transparent 66%);
+  filter: blur(34px);
+  z-index: -1;
+}
+.hero-character__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* mask halus di tepi bawah supaya menyatu dengan container */
+  filter: drop-shadow(0 26px 46px rgba(6, 11, 20, 0.75));
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+}
+
+/* Orbit rings (lingkaran konsentris) di belakang karakter */
+.hero-orbit {
+  position: absolute;
+  left: 50%; top: 42%;
+  translate: -50% -50%;
+  width: min(120%, 560px);
+  aspect-ratio: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-orbit::before,
+.hero-orbit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(96, 165, 250, 0.18);
+}
+.hero-orbit::after { inset: 14%; border-color: rgba(96, 165, 250, 0.12); }
+
+/* Ikon tech melayang */
+.hero-tech-slot { position: absolute; z-index: 4; }
+.hero-tech {
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.65);
+  will-change: transform;
+}
+.hero-tech svg { width: 54%; height: 54%; }
+
+/* Durasi float beda-beda agar organik; delay negatif dari props */
+.hero-tech--float-4 { animation: hero-float-4 4s ease-in-out infinite; }
+.hero-tech--float-5 { animation: hero-float-5 5s ease-in-out infinite; }
+.hero-tech--float-6 { animation: hero-float-6 6s ease-in-out infinite; }
+
+/* Badge angka "01" */
+.hero-badge__num {
+  font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--accent-bright);
+  animation: hero-badge-pulse 2.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ─── KEYFRAMES ───────────────────────────────────────────────── */
+@keyframes hero-float-4 {
+  0%, 100% { transform: translateY(-12px) rotate(-4deg); }
+  50%      { transform: translateY(12px) rotate(4deg); }
+}
+@keyframes hero-float-5 {
+  0%, 100% { transform: translateY(14px) rotate(4deg); }
+  50%      { transform: translateY(-14px) rotate(-4deg); }
+}
+@keyframes hero-float-6 {
+  0%, 100% { transform: translateY(-16px) rotate(3deg); }
+  50%      { transform: translateY(16px) rotate(-3deg); }
+}
+@keyframes hero-char-bob {
+  0%, 100% { transform: translateY(-8px); }
+  50%      { transform: translateY(8px); }
+}
+@keyframes hero-arrow-float {
+  0%, 100% { transform: translateY(-8px) rotate(-3deg); }
+  50%      { transform: translateY(8px) rotate(3deg); }
+}
+@keyframes hero-badge-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+@keyframes hero-ring-spin { to { transform: rotate(360deg); } }
+@keyframes hero-cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes hero-blob-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(4%, -3%, 0) scale(1.12); }
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────── */
+/* 768–1023px: kolom kanan diperkecil, headline turun, ikon tech berkurang */
+@media (max-width: 1023px) {
+  .hero-headline { font-size: clamp(2.5rem, min(9vw, 11svh), 5rem); }
+  .hero-character { width: clamp(180px, min(34vw, 44svh), 300px); }
+  .hero-blob { filter: blur(60px); }
+}
+
+/* <768px: stack 1 kolom, glass card full width, blur dikurangi (performa) */
+@media (max-width: 767px) {
+  .hero-quote { max-width: 100%; }
+  .hero-btn--primary,
+  .hero-btn--secondary { width: 100%; }
+  .hero-blob { filter: blur(50px); }
+  .hero-character { width: clamp(170px, min(60vw, 40svh), 280px); }
+  .hero-visual__curves { inset: -4% -2%; opacity: 0.7; }
+}
+
+/* ─── REDUCED MOTION (WAJIB) ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-navy *,
+  .hero-navy *::before,
+  .hero-navy *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

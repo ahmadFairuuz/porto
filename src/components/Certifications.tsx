@@ -1,86 +1,55 @@
-const certifications = [
-  {
-    title: 'AWS Certified Solutions Architect',
-    issuer: 'Amazon Web Services',
-    date: 'Dec 2023',
-    badge: '🏆',
-    color: 'from-orange-500 to-yellow-500'
-  },
-  {
-    title: 'Google Cloud Professional Developer',
-    issuer: 'Google Cloud',
-    date: 'Aug 2023',
-    badge: '☁️',
-    color: 'from-blue-500 to-cyan-500'
-  },
-  {
-    title: 'Meta Front-End Developer Certificate',
-    issuer: 'Meta (Coursera)',
-    date: 'May 2023',
-    badge: '⚛️',
-    color: 'from-indigo-500 to-purple-500'
-  },
-  {
-    title: 'MongoDB Certified Developer',
-    issuer: 'MongoDB University',
-    date: 'Feb 2023',
-    badge: '🍃',
-    color: 'from-green-500 to-emerald-500'
-  },
-  {
-    title: 'Microsoft Azure Fundamentals',
-    issuer: 'Microsoft',
-    date: 'Nov 2022',
-    badge: '☁️',
-    color: 'from-sky-500 to-blue-500'
-  },
-  {
-    title: 'Kubernetes Application Developer',
-    issuer: 'Cloud Native Computing Foundation',
-    date: 'Sep 2022',
-    badge: '⚙️',
-    color: 'from-purple-500 to-pink-500'
-  }
-];
+import { motion } from 'framer-motion';
 
 export default function Certifications() {
+  const certs = [
+    { title: 'AWS Certified Solutions Architect', issuer: 'Amazon Web Services', date: 'Dec 2023', emoji: '🏆', gradient: 'from-[#f97316] to-[#eab308]' },
+    { title: 'Google Cloud Professional Developer', issuer: 'Google Cloud', date: 'Aug 2023', emoji: '☁️', gradient: 'from-[#3b82f6] to-[#06b6d4]' },
+    { title: 'Meta Front-End Developer Certificate', issuer: 'Meta (Coursera)', date: 'May 2023', emoji: '⚛️', gradient: 'from-[#6366f1] to-[#a855f7]' },
+    { title: 'MongoDB Certified Developer', issuer: 'MongoDB University', date: 'Feb 2023', emoji: '🍃', gradient: 'from-[#22c55e] to-[#10b981]' },
+    { title: 'Microsoft Azure Fundamentals', issuer: 'Microsoft', date: 'Nov 2022', emoji: '☁️', gradient: 'from-[#0ea5e9] to-[#3b82f6]' },
+    { title: 'Kubernetes Application Developer', issuer: 'Cloud Native Computing Foundation', date: 'Sep 2022', emoji: '⚙️', gradient: 'from-[#a855f7] to-[#ec4899]' }
+  ];
+
+  const scrollVariant = {
+    hidden: { opacity: 0, y: 48, filter: 'blur(8px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.9, ease: [0.32, 0.72, 0, 1] } }
+  };
+
   return (
-    <section id="certifications" className="relative py-24 md:py-32">
+    <section id="certifications" className="py-28 md:py-40">
       <div className="max-w-6xl mx-auto px-6">
-        <p className="font-mono text-sm text-indigo tracking-widest uppercase mb-3 text-center">Certifications</p>
-        <h2 className="font-heading font-bold text-3xl md:text-4xl text-heading mb-16 text-center">Achievements & credentials.</h2>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certifications.map((cert, i) => (
-            <div
+        <motion.div variants={scrollVariant} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.08 }} className="text-center mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] font-medium text-accent bg-accent/10 border border-accent/15 mb-5">
+            Certifications
+          </div>
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-heading">Achievements & credentials.</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {certs.map((cert, i) => (
+            <motion.div 
               key={i}
-              className="group relative bg-slate/50 backdrop-blur-sm rounded-2xl p-6 border border-white/5 hover:border-white/20 transition-all duration-300 hover:scale-[1.02]"
+              variants={scrollVariant} 
+              initial="hidden" 
+              whileInView="show" 
+              viewport={{ once: true, amount: 0.08 }}
+              className="bg-bg-card border border-hairline rounded-bezel p-1.5 hover:border-hairline-h transition-colors duration-700 ease-spring"
             >
-              {/* Badge gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${cert.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`} />
-              
-              <div className="relative">
-                {/* Icon */}
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${cert.color} mb-4 text-3xl`}>
-                  {cert.badge}
+              <div className="bg-bg-inner rounded-bezel-inner p-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06)] h-full flex flex-col">
+                <div className={'w-12 h-12 rounded-[0.85rem] flex items-center justify-center text-xl mb-5 bg-gradient-to-br ' + cert.gradient}>
+                  {cert.emoji}
                 </div>
-                
-                {/* Title */}
-                <h3 className="font-heading font-bold text-lg text-heading mb-2 leading-snug">
-                  {cert.title}
-                </h3>
-                
-                {/* Issuer */}
-                <p className="text-sm opacity-70 mb-3">{cert.issuer}</p>
-                
-                {/* Date */}
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-indigo">{cert.date}</span>
+                <h3 className="font-heading font-semibold text-base text-heading mb-1.5 leading-snug">{cert.title}</h3>
+                <p className="text-xs opacity-60 mb-3">{cert.issuer}</p>
+                <div className="mt-auto">
+                  <span className="font-mono text-[10px] text-accent uppercase tracking-widest">{cert.date}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );
