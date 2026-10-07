@@ -69,7 +69,7 @@ export default function Contact() {
     {
       name: 'LinkedIn',
       handle: 'Ahmad Fairuz',
-      url: 'https://linkedin.com/in/ahmadfairuuz',
+      url: 'https://www.linkedin.com/in/ahmadfairuzrizky/',
       icon: Linkedin,
       desc: 'Connect professionally',
     },
